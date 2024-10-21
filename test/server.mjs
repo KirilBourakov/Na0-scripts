@@ -7,11 +7,11 @@ const port = 3000;
 let pythonProcess = null;
 
 app.get('/', (req, res) => {
-  pythonProcess = spawn('python', ['../face_detect.py'])
+  pythonProcess = spawn('C:\\Users\\alexb\\Desktop\\na0\\.env\\python.exe', ['../walk_and_talk.py'])
   pythonProcess.stdout.on('data', (data) => {
     console.log(`Python stdout: ${data}`);
   });
-  res.send('"Started Python process');
+  res.send('Started Python process!');
 });
 
 app.get('/kill', (req, res) => {
