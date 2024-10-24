@@ -5,7 +5,9 @@
 
 import sys
 import time
-import httplib
+import numpy as np
+import cv2
+import subprocess
 
 from naoqi import ALProxy
 from naoqi import ALBroker
@@ -31,6 +33,8 @@ class ReaderModule(ALModule):
         # create needed proxies
         self.tts = ALProxy("ALTextToSpeech")
         self.asr = ALProxy("ALSpeechRecognition", NAO_IP, 9559)
+        self.camera = ALProxy("ALVideoDevice", NAO_IP, 9559)
+        self.id = self.camera.subscribeCamera("python_GVM", 0, 2, 11, 30)
         global memory
         memory = ALProxy("ALMemory")
 
@@ -57,6 +61,16 @@ class ReaderModule(ALModule):
 
         if (word_detected[0] == 'read' and word_detected[1] > 0.4):
             self.tts.say("I dont know how.")
+            image_data = self.camera.getImageRemote(self.id)
+
+            # get what the na0 is looking at
+            image_width = image_data[0]
+            image_height = image_data[1]
+            image_array = image_data[6]
+
+            image = np.frombuffer(image_array, dtype=np.uint8).reshape(image_height, image_width, 3)
+
+            cv2.imwrite("C:\\Users\\alexb\\Desktop\\na0\\scripts\\read_on_command\\img.png", image)
         else:
             self.tts.say("I dont know what you want.")
         

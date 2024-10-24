@@ -3,3 +3,6 @@
 
 # python 3.12.7 env for packages that need newer python version
 .env3
+
+# tesseract osr install location
+tesseract
