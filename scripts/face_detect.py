@@ -5,6 +5,7 @@
 
 import sys
 import time
+import httplib
 
 from naoqi import ALProxy
 from naoqi import ALBroker
@@ -13,6 +14,7 @@ from naoqi import ALModule
 from optparse import OptionParser
 
 NAO_IP = "192.168.2.251"
+REMOTE_IP = "192.168.2.112:3000"
 
 
 # Global variable to store the HumanGreeter module instance
@@ -53,6 +55,11 @@ class HumanGreeterModule(ALModule):
             "HumanGreeter")
 
         self.tts.say("Hello, you")
+
+        conn = httplib.HTTPConnection(REMOTE_IP)
+        conn.request('GET', '/call')
+        response = conn.getresponse()
+        print(response.read())
 
         # Subscribe again to the event
         memory.subscribeToEvent("FaceDetected",

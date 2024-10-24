@@ -1,2 +1,5 @@
 # python 2.7 with the 32bit na0 package install
-.env
+.env27
+
+# python 3.12.7 env for packages that need newer python version
+.env3
