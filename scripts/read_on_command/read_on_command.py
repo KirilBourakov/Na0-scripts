@@ -60,7 +60,7 @@ class ReaderModule(ALModule):
         self.asr.unsubscribe("read_asr")
 
         if (word_detected[0] == 'read' and word_detected[1] > 0.4):
-            self.tts.say("I dont know how.")
+            self.tts.say("Reading.")
             image_data = self.camera.getImageRemote(self.id)
 
             # get what the na0 is looking at
@@ -71,6 +71,15 @@ class ReaderModule(ALModule):
             image = np.frombuffer(image_array, dtype=np.uint8).reshape(image_height, image_width, 3)
 
             cv2.imwrite("C:\\Users\\alexb\\Desktop\\na0\\scripts\\read_on_command\\img.png", image)
+
+            process = subprocess.Popen(['python3', 'reader.py', 'img.png'], 
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE,
+                                    universal_newlines=True
+                                )
+            stdout, stderr = process.communicate()
+            self.tts.say(stdout)
+
         else:
             self.tts.say("I dont know what you want.")
         
