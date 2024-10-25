@@ -75,7 +75,7 @@ class ReaderModule(ALModule):
 
             cv2.imwrite("C:\\Users\\alexb\\Desktop\\na0\\scripts\\read_on_command\\img.png", image)
 
-            process = subprocess.Popen(['python3', 'reader.py', 'img.png'], 
+            process = subprocess.Popen(['python3', 'easyocr_reader.py', 'img.png'], 
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE,
                                     universal_newlines=True
