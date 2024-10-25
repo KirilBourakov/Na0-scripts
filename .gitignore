@@ -6,3 +6,6 @@
 
 # tesseract osr install location
 tesseract
+
+*.png
+*.pyc
