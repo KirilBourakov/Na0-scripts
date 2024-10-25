@@ -34,12 +34,15 @@ class ReaderModule(ALModule):
         self.tts = ALProxy("ALTextToSpeech")
         self.asr = ALProxy("ALSpeechRecognition", NAO_IP, 9559)
         self.camera = ALProxy("ALVideoDevice", NAO_IP, 9559)
-        self.id = self.camera.subscribeCamera("python_GVM", 0, 2, 11, 30)
+        self.basic_awareness = ALProxy("ALBasicAwareness", NAO_IP, 9559)
+        self.id = self.camera.subscribeCamera("python_GVM", 0, 3, 11, 30)
         global memory
         memory = ALProxy("ALMemory")
 
         # configure proxies
+        self.basic_awareness.stopAwareness()
         self.asr.pause(True)
+        self.asr.setVisualExpression(False)
         self.asr.setLanguage("English")
         self.asr.setVocabulary(['read'], False)
         self.asr.subscribe("read_asr")
@@ -78,7 +81,13 @@ class ReaderModule(ALModule):
                                     universal_newlines=True
                                 )
             stdout, stderr = process.communicate()
-            self.tts.say(stdout)
+            print(stderr)
+            print(stdout)
+            if (len(stdout.strip()) > 0):
+                self.tts.say("I think it says.")
+                self.tts.say(stdout)
+            else:
+                "I can't find an text"
 
         else:
             self.tts.say("I dont know what you want.")
@@ -90,6 +99,7 @@ class ReaderModule(ALModule):
         "read")
 
     def exit(self):
+        self.basic_awareness.startAwareness()
         self.asr.unsubscribe("read_asr")
 
 
@@ -102,10 +112,6 @@ def main():
        NAO_IP,         # parent broker IP
        9559)       # parent broker port
 
-
-    # Warning: HumanGreeter must be a global variable
-    # The name given to the constructor must be the name of the
-    # variable
     global reader
     reader = ReaderModule("reader")
 
