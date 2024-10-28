@@ -23,7 +23,7 @@ def kb(motion):
         if not keyboard.is_pressed("left") and keyboard.is_pressed("right"):
             force[1] += 0.1
         if not keyboard.is_pressed("right") and keyboard.is_pressed("left"):
-            force[1] -= 0.1
+            force[1] -= 0.1        
         
         # turn
         if not keyboard.is_pressed("a") and keyboard.is_pressed("d"):
