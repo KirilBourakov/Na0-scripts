@@ -9,7 +9,7 @@ def main():
     session.connect(f"tcp://{robot_ip}:{port}")
     tts = session.service("ALTextToSpeech")
 
-    speaker = Speaker(tts)
+    speaker = Speaker(tts, session.service("ALBehaviorManager"))
     tts.say("I live.")
     while True:
         next = input("Prompt: ")
