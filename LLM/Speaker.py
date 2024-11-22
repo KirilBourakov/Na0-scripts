@@ -23,7 +23,7 @@ class Speaker():
                 },
             ],
         )
-        self.mover.run_behaviour(f"{input} \n {response["message"]["content"]}")
+        self.mover.run_behaviour(f"{input} \n {response['message']['content']}")
 
         self.conversation_history += response["message"]["content"] + '\n'
         self.tts.say(response["message"]["content"])
