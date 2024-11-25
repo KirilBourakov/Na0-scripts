@@ -1,0 +1,4 @@
+ollama==0.4.1
+qi==3.1.5
+RealtimeSTT==0.3.7
+RealtimeSTT==0.3.8
