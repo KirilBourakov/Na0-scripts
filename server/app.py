@@ -1,25 +1,16 @@
 from flask import Flask,render_template,request
 from flask_socketio import SocketIO, emit
-import threading
+from MoveManager import MoveManager
 import qi
 
 app = Flask(__name__)
 socketio = SocketIO(app,debug=True,cors_allowed_origins='*',async_mode='eventlet')
-
 robot_ip = "192.168.2.251"
 port = 9559
 session = qi.Session()
 session.connect(f"tcp://{robot_ip}:{port}")
-motion = session.service("ALMotion")
-motion.setStiffnesses("Body", 1.0)
-motion.moveInit()
+move_manager = MoveManager(session)
 
-running = True
-def walk_manager():
-    global running
-    while running:
-        motion.moveTo(1,0,0)
-thread = threading.Thread(target=walk_manager)
 
 @app.route('/')
 def main():
@@ -28,13 +19,6 @@ def main():
 @socketio.on("walk")
 def walk(event):
     if (event == 'down'):
-        global running
-        running = True
-        global thread
-        thread.start()
+        move_manager.start([1,0,0])
     else:
-        print('here')
-        running = False
-        thread.join()
-        thread = threading.Thread(target=walk_manager)
-    
+        move_manager.end()
