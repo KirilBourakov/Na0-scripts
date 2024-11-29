@@ -18,7 +18,7 @@ def main():
 
 @socketio.on("walk")
 def walk(event):
-    if (event == 'down'):
-        move_manager.start([1,0,0])
+    if (event['direction']  == 'down'):
+        move_manager.start(event['force'])
     else:
         move_manager.end()
