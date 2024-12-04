@@ -5,12 +5,9 @@ function App() {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    
+
     const socket = io("localhost:5001/", {
       transports: ["websocket"],
-      cors: {
-        origin: "http://localhost:3000/",
-      },
     })
 
   }, [])
