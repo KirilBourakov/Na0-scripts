@@ -3,7 +3,9 @@ import './static/main.css'
 
 function App() {
   return (
-    <Walk />
+    <div className="flex">
+      <Walk/>
+    </div>
   )
 }
 

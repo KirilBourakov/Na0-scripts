@@ -1,6 +1,5 @@
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
-import { Socket } from "socket.io";
 
 function Walk() {
     const [move, setMove] = useState({
@@ -10,8 +9,9 @@ function Walk() {
         'up': false
     })
 
+    let socket;
     useEffect(() => {
-        const socket = io("localhost:5001/", {
+        socket = io("localhost:5001/", {
         transports: ["websocket"],
         })
 
@@ -37,21 +37,21 @@ function Walk() {
 
     }, [])
 
-    function flip(target: string): string{
+    function flip(target){
         if (target == 'right') return 'left'
         if (target == 'left') return 'right'
         if (target == 'up') return 'down'
         return 'up'
     }
 
-    function handleClicks(event: any){
-        const clickedElementId: string = event.target.id;
+    function handleClicks(event){
+        const clickedElementId = event.target.id;
         const opp = flip(clickedElementId)
         const val = move[clickedElementId]
 
         setMove({
             ...move,
-            [clickedElementId]: !val,
+            [clickedElementId]: true,
             [opp]: false,
         })
 
