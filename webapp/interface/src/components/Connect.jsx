@@ -1,18 +1,14 @@
-import { useEffect, useState } from "react"
+import { useConnectContext } from '../state/connectionState';
 
 function Connect(){
-    // const [status, setStatus] = useState("State: none")
+    const { state, setState } = useConnectContext();
 
-    // function connect(){
-        
-    // }
-
-    // return (
-    //     <div>
-    //         <button onClick={connect}>Connect to Na0</button>
-    //         <div>Status: </div>
-    //     </div>
-    // )
+    return (
+        <div>
+            <button>Connect to Na0</button>
+            <div>Status: {state ? 'not connected' : 'connected'}</div>
+        </div>
+    )
 }
 
 export default Connect
