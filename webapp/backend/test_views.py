@@ -21,5 +21,12 @@ class TestViews():
             path = f"img/{self.curr}.jpg"
             self.curr = self.curr + 1 if self.curr + 1 <= 2 else 0
             return render_template('sight.html', image_path=path)
+        
+        @self.socketio.on('connect')
+        def connect(event):
+            print('connected')
+            self.socketio.emit('connected', {
+                'code': 200
+            })
 
     

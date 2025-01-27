@@ -4,7 +4,8 @@ const ConnectContext = createContext();
 
 export const ConnectionProvider = ({ children }) => {
   const [state, setState] = useState({
-    'connected': true
+    'connected': false,
+    'connection': null
   });
 
   return (
