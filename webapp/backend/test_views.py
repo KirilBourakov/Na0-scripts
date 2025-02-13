@@ -29,4 +29,8 @@ class TestViews():
                 'code': 200
             })
 
+        @self.socketio.on('moveUpdate')
+        def move_update(event):
+            print(event)
+
     

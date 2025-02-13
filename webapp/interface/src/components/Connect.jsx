@@ -2,7 +2,7 @@ import { useConnectContext } from '../state/connectionState';
 import { io } from "socket.io-client";
 
 function Connect(){
-    const { state, setState } = useConnectContext();
+    const {state, setState} = useConnectContext();
 
     function connect(){
         const connection = io("localhost:5001/", {
