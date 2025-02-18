@@ -1,5 +1,3 @@
-import threading
-
 class MoveManager():
     def __init__(self, session):
         self.session = session

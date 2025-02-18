@@ -1,7 +1,7 @@
 class TrueViews():
     def __init__(self, app, socketio):
         import qi
-        from MoveManager import MoveManager
+        from webapp.backend.managers.MoveManager import MoveManager
 
         self.app = app
         self.socketio = socketio
@@ -17,15 +17,21 @@ class TrueViews():
     def register(self):
         @self.app.route('/')
         def main():
+            '''test route'''
             return "hello"
 
         @self.socketio.on('connect')
         def connect(event):
+            '''handle connection to server'''
             print('connected')
+            self.socketio.emit('connected', {
+                'code': 200
+            })
 
-        @self.socketio.on("walk")
-        def walk(event):
-            if (event['direction']  == 'down'):
-                self.move_manager.start(event['force'])
+        @self.socketio.on("moveUpdate")
+        def move_update(event):
+            '''handle updates to the move manager'''
+            if (event['x'] != 0 and event['y'] != 0):
+                self.move_manager.start([event['x'], event['y']])
             else:
                 self.move_manager.end()
