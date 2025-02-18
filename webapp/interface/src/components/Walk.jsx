@@ -23,7 +23,7 @@ function Walk() {
         setDirection(newDirection)
     }
     function handleStop(){
-        if (connectionState.state.connected || connectionState.state.connection === null){
+        if (!connectionState.state.connected || connectionState.state.connection === null){   
             setDirection([0,0])
         } 
         else {
