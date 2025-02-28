@@ -5,8 +5,9 @@ class MoveManager():
         self.motion.setStiffnesses("Body", 1.0)
         self.motion.moveInit()
 
-    def start(self, directions):
-        self.motion.move(*directions)
+    def start(self, x, y):
+        print(x, y)
+        self.motion.move(x, y, 0)
 
     def end(self):
         self.motion.stopWalk()
