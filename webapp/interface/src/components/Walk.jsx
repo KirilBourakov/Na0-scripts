@@ -34,6 +34,9 @@ function Walk() {
     return (
 
         <div className="flex flex-col items-center justify-center">
+            <h1 className='font-bold text-xl text-center'>Move</h1>
+            <hr className='py-2 mx-2 w-full'/>
+
             <div className="m-2">
                 <FaCircleArrowUp 
                     size={35} 

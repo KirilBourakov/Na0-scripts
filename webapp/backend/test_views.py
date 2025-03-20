@@ -1,4 +1,5 @@
-from flask import render_template
+from flask import render_template, request, jsonify
+
 
 class TestViews():
     def __init__(self, app, socketio):
@@ -16,6 +17,12 @@ class TestViews():
         def main():
             '''test route'''
             return "hello"
+        
+        self.app.route('/speech', methods = ['POST'])
+        def speech():
+            transcript = request.json['transcript']
+            # get response to transcript
+            return jsonify({'transcript': transcript})
         
         @self.app.route('/sight')
         def sight():
