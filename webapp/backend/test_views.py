@@ -18,12 +18,6 @@ class TestViews():
             '''test route'''
             return "hello"
         
-        self.app.route('/speech', methods = ['POST'])
-        def speech():
-            transcript = request.json['transcript']
-            # get response to transcript
-            return jsonify({'transcript': transcript})
-        
         @self.app.route('/sight')
         def sight():
             '''get an image of what the nao is seeing'''
@@ -56,5 +50,10 @@ class TestViews():
             if len(direction) == 0:
                 direction = 'Nowhere'
             print(direction)
+        
+        @self.socketio.on('userSpeech')
+        def speek(event):
+            print(event)
 
+            self.socketio.emit('finishedSpeaking')
     

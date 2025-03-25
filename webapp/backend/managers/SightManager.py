@@ -12,7 +12,11 @@ class SightManager():
         self.thread = CameraThread(self.camera, self.id)
 
     def start(self):
-        self.thread.start()
+        print(self.thread)
+        if (not self.thread.is_alive()):
+            if (self.thread.ident != None):
+                self.thread = CameraThread(self.camera, self.id)
+            self.thread.start()
 
     def end(self):
         self.thread.stop()

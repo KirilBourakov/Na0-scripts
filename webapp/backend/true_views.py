@@ -1,10 +1,11 @@
-from flask import render_template
-from managers.SightManager import SightManager
+from flask import render_template 
 
 class TrueViews():
     def __init__(self, app, socketio):
         import qi
         from managers.MoveManager import MoveManager
+        from managers.SightManager import SightManager
+        from managers.LLMManger import LLMManager
 
         self.app = app
         self.socketio = socketio
@@ -15,6 +16,7 @@ class TrueViews():
 
         self.move_manager = MoveManager(session)
         self.sight_manager = SightManager(session)
+        self.llm_manager = LLMManager(session)
 
         self.register()
         self.socketio.run(app, debug=True,port=5001)
@@ -50,3 +52,10 @@ class TrueViews():
                 self.move_manager.start(event['x'], event['y'])
             else:
                 self.move_manager.end()
+
+        @self.socketio.on('userSpeech')
+        def speek(event):
+            self.llm_manager.respond_to(event['transcript'])
+
+            self.socketio.emit('finishedSpeaking')
+    
