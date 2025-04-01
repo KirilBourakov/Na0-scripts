@@ -10,15 +10,15 @@ function Walk() {
     function handleMove(data){  
         let newDirection = [0, 0]
         if (data.x > 0.5){
-            newDirection[0] = 1
+            newDirection[1] = 1
         } else if (data.x < -0.5){
-            newDirection[0] = -1
+            newDirection[1] = -1
         }
 
         if (data.y > 0.5){
-            newDirection[1] = 1
+            newDirection[0] = 1
         } else if (data.y < -0.5){
-            newDirection[1] = -1
+            newDirection[0] = -1
         }
         setDirection(newDirection)
     }
@@ -40,14 +40,14 @@ function Walk() {
             <div className="m-2">
                 <FaCircleArrowUp 
                     size={35} 
-                    className={`${direction[1] == 1 ? "text-green-700" : "text-red-700"}`}
+                    className={`${direction[0] == 1 ? "text-green-700" : "text-red-700"}`}
                 />
             </div>
             <div className="flex items-center justify-center">
                 <div className="m-2">
                     <FaCircleArrowLeft 
                         size={35}
-                        className={`${direction[0] == -1 ? "text-green-700" : "text-red-700"}`}
+                        className={`${direction[1] == -1 ? "text-green-700" : "text-red-700"}`}
                     />
                 </div>
 
@@ -56,14 +56,14 @@ function Walk() {
                 <div className="m-2">
                     <FaCircleArrowRight 
                         size={35} 
-                        className={`${direction[0] == 1 ? "text-green-700" : "text-red-700"}`}
+                        className={`${direction[1] == 1 ? "text-green-700" : "text-red-700"}`}
                     />
                 </div>
             </div>
             <div className="m-2">
                 <FaCircleArrowDown 
                     size={35} 
-                    className={`${direction[1] == -1 ? "text-green-700" : "text-red-700"}`}
+                    className={`${direction[0] == -1 ? "text-green-700" : "text-red-700"}`}
                 />
             </div>
         </div>

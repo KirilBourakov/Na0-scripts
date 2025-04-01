@@ -9,14 +9,14 @@ class SightManager():
         self.camera = session.service("ALVideoDevice")
         self.id = self.camera.subscribeCamera("python_GVM", 0, 3, 11, 30)
 
-        self.thread = CameraThread(self.camera, self.id)
+        self.thread = None
 
     def start(self):
-        print(self.thread)
-        if (not self.thread.is_alive()):
-            if (self.thread.ident != None):
-                self.thread = CameraThread(self.camera, self.id)
-            self.thread.start()
+        if self.thread is None or not self.thread.is_alive():
+            self.thread = CameraThread(self.camera, self.id) 
+            self.thread.start() 
+        else:
+            print("Thread is already running.") 
 
     def end(self):
         self.thread.stop()
