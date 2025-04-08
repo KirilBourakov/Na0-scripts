@@ -2,7 +2,7 @@ import './static/main.css'
 import Connect from "./components/Connect";
 import Walk from "./components/Walk";
 import View from "./components/View"
-import Speak from './components/Speak';
+import Speak from './components/Speak/Speak';
 
 function App() {
   return (

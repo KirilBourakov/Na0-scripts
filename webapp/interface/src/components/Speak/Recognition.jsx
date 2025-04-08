@@ -1,19 +1,4 @@
-import { useState } from 'react';
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { useConnectContext } from '../state/connectionState';
-
-export default function Speak(){
-    const [sending, setSending] = useState("")
-    const {state, setState} = useConnectContext();
-    const [typedTranscript, setTypedTranscript] = useState('');
-
-    const {
-        transcript,
-        listening,
-        resetTranscript,
-        browserSupportsSpeechRecognition
-    } = useSpeechRecognition();
-
+export default function Recognition({sending, setSending, state, transcript, listening, resetTranscript}){
     async function finish(){
         setSending(true)
         SpeechRecognition.stopListening() 
@@ -38,40 +23,6 @@ export default function Speak(){
         } else {
             SpeechRecognition.startListening()
         }
-    }
-
-    function handleSubmit(){
-        setSending(true)
-        if (state.connected){
-            state.connection.emit('userSpeech',  {'transcript': typedTranscript})
-            state.connection.on('finishedSpeaking', () => {
-                console.log("done speaking")
-                resetTranscript()
-                setSending(false)
-            })
-        } else {
-            console.error('Cannot send without connection; Error in Speak.')
-        } 
-    }
-
-    if (!browserSupportsSpeechRecognition) {
-        return (
-            <div>
-                <span>Browser doesn't support speech recognition.</span> 
-                <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Input via text:</label>
-                    <input
-                    type="text"
-                    value={typedTranscript}
-                    onChange={(e) => setTypedTranscript(e.target.value)}
-                    required
-                    />
-                </div>
-                <button type="submit">Submit</button>
-                </form>
-            </div>
-        )
     }
 
     return (
